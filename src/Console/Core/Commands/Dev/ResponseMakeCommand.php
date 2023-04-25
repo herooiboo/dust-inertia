@@ -38,13 +38,6 @@ class ResponseMakeCommand extends GeneratorCommand
         return $this->resolveStubPath('/stubs/response.stub');
     }
 
-    protected function resolveStubPath($stub): string
-    {
-        return file_exists($customPath = $this->laravel->basePath(trim($stub, '/')))
-            ? $customPath
-            : __DIR__.$stub;
-    }
-
     protected function getDefaultNamespace($rootNamespace): string
     {
         if (! is_null($module = $this->option('module'))) {

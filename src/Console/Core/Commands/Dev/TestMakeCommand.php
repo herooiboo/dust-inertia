@@ -43,7 +43,7 @@ class TestMakeCommand extends BaseTestMakeCommand
     protected function rootNamespace(): string
     {
         if (! is_null($this->option('module'))) {
-            return 'Dust';
+            return 'App';
         }
 
         return parent::rootNamespace();
