@@ -1,6 +1,6 @@
 {
     "name": "cyberbugz/dust",
-    "version": "v1.0.3",
+    "version": "v1.0.4",
     "description": "The Nebula project dust.",
     "type": "library",
     "require": {
@@ -27,8 +27,7 @@
                 "Dust\\Providers\\DustServiceProvider",
                 "Dust\\Providers\\EventServiceProvider",
                 "Dust\\Providers\\MigrationServiceProvider",
-                "Dust\\Providers\\RouteServiceProvider",
-                "Dust\\Providers\\AritsanServiceProvider"
+                "Dust\\Providers\\RouteServiceProvider"
             ]
         }
     },
@@ -36,7 +35,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "config": {
-        "sort-packages": true,
+        "sort-packages": false,
         "preferred-install": "dist",
         "optimize-autoloader": true
     }
