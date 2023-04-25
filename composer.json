@@ -1,6 +1,6 @@
 {
     "name": "cyberbugz/dust",
-    "version": "v2.0.0",
+    "version": "v2.0.1",
     "description": "The Nebula project dust.",
     "type": "library",
     "require": {
@@ -21,7 +21,8 @@
     "authors": [
         {
             "name": "Manson",
-            "email": "mansonx13@gmail.com"
+            "email": "mansonx13@gmail.com",
+            "role": "Archetict"
         }
     ],
     "extra": {
