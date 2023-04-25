@@ -1,0 +1,16 @@
+<?php
+
+namespace {{ namespace }};
+
+use App\Base\Response;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+
+class {{ class }} extends Response
+{
+    protected function createResource(mixed $resource): JsonResponse|JsonResource|LengthAwarePaginator
+    {
+        //
+    }
+}

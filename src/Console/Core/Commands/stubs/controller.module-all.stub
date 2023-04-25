@@ -1,0 +1,23 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Http\Request;
+use {{ rootNamespace }}Base\Controller;
+use {{ rootNamespace }}Base\Contracts\ResponseInterface;
+use {{ responseNamespace }};
+use {{ requestNamespace }};
+use {{ serviceNamespace }};
+
+class {{ class }} extends Controller
+{
+    public function __construct({{ response }} $response, {{ request }} $request, protected {{ service }} $service)
+    {
+        parent::__construct($response, $request);
+    }
+
+    public function handle(ResponseInterface $response, Request $request): mixed
+    {
+        //
+    }
+}

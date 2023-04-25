@@ -26,7 +26,7 @@ if (! function_exists('get_module_path')) {
 if (! function_exists('get_module_namespace')) {
     function get_module_namespace(string $rootNamespace, string $module, array $subdirectories, string $modulesRoot = ''): string
     {
-        $modulesRoot = $modulesRoot ?: modules_path();
+        $modulesRoot = $modulesRoot ?: trim(str_replace(app_path(), '', modules_path()), '/');
 
         $subdirectories = array_filter($subdirectories);
 

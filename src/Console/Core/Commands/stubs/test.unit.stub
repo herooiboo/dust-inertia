@@ -1,0 +1,17 @@
+<?php
+
+namespace {{ namespace }};
+
+use PHPUnit\Framework\TestCase;
+
+class {{ class }} extends TestCase
+{
+    /**
+     * @test
+     * {{ moduleGroup }}
+     */
+    public function example(): void
+    {
+        $this->assertTrue(true);
+    }
+}

@@ -1,0 +1,15 @@
+<?php
+
+namespace {{ namespace }};
+
+use {{ rootNamespace }}Base\Controller;
+use {{ rootNamespace }}Base\Contracts\ResponseInterface;
+use Illuminate\Http\Request;
+
+class {{ class }} extends Controller
+{
+    public function handle(ResponseInterface $response, Request $request): mixed
+    {
+        //
+    }
+}
