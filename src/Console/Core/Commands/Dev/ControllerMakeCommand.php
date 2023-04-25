@@ -11,10 +11,10 @@ use Illuminate\Routing\Console\ControllerMakeCommand as BaseControllerMakeComman
 class ControllerMakeCommand extends BaseControllerMakeCommand
 {
     use GuardChecker, OptionsExtender {
-        getOptions as concernGetOptions;
+        OptionsExtender::getOptions as concernGetOptions;
     }
 
-    public function handle()
+    public function handle(): void
     {
         $this->checkAbsolutePath();
 
@@ -92,6 +92,7 @@ class ControllerMakeCommand extends BaseControllerMakeCommand
         $name = Str::of(class_basename($name))->finish('Service');
         $serviceClass = get_module_namespace(trim($this->rootNamespace(), '\\'), $this->option('module'),
             [
+                'Core',
                 'Services',
                 $this->checkGuard(),
                 $name,
@@ -152,7 +153,7 @@ class ControllerMakeCommand extends BaseControllerMakeCommand
         return parent::qualifyClass($name);
     }
 
-    protected function createRequest(string $name, string $module)
+    protected function createRequest(string $name, string $module): void
     {
         $arguments = [
             'name' => $name,
@@ -164,7 +165,7 @@ class ControllerMakeCommand extends BaseControllerMakeCommand
         $this->call('make:request', $arguments);
     }
 
-    protected function createResponse(string $name, string $module)
+    protected function createResponse(string $name, string $module): void
     {
         $arguments = [
             'name' => $name,
@@ -176,7 +177,7 @@ class ControllerMakeCommand extends BaseControllerMakeCommand
         $this->call('make:response', $arguments);
     }
 
-    protected function createService(string $name, string $module)
+    protected function createService(string $name, string $module): void
     {
         $arguments = [
             'name' => $name,

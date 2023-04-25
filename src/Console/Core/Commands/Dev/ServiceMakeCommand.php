@@ -22,12 +22,12 @@ class ServiceMakeCommand extends GeneratorCommand
     protected function getPath($name): string
     {
         if (! is_null($module = $this->option('module'))) {
-            $name = (string) Str::of($name)->replaceFirst(get_module_namespace($this->laravel->getNamespace(), $module, ['Services', $this->checkGuard()]), '')->finish('Service');
+            $name = (string) Str::of($name)->replaceFirst(get_module_namespace($this->laravel->getNamespace(), $module, ['Core', 'Services', $this->checkGuard()]), '')->finish('Service');
             if (str_starts_with($name, '\\')) {
                 $name = str_replace('\\', '', $name);
             }
 
-            return get_module_path($module, ['Services', $this->checkGuard(), "$name.php"]);
+            return get_module_path($module, ['Core', 'Services', $this->checkGuard(), "$name.php"]);
         }
 
         return parent::getPath($name);
