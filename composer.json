@@ -1,0 +1,42 @@
+{
+    "name": "cyberbugz/dust",
+    "version": "v1.0.0",
+    "description": "The Nebula project dust.",
+    "type": "library",
+    "require": {
+        "illuminate/console": "10.x-dev",
+        "php": "^8.1"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Dust\\": "src/"
+        },
+        "files": [
+            "src/Support/helpers.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "Manson",
+            "email": "mansonx13@gmail.com"
+        }
+    ],
+    "extra": {
+        "providers": [
+            "Dust\\Providers\\AritsanServiceProvider",
+            "Dust\\Providers\\EventServiceProvider",
+            "Dust\\Providers\\MigrationServiceProvider",
+            "Dust\\Providers\\RouteServiceProvider",
+            "Dust\\Providers\\DustServiceProvider"
+        ]
+    },
+    "require-dev": {},
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true,
+        "preferred-install": "dist",
+        "optimize-autoloader": true
+    }
+}
