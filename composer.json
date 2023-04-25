@@ -1,10 +1,9 @@
 {
     "name": "cyberbugz/dust",
-    "version": "v1.0.1",
+    "version": "v1.0.2",
     "description": "The Nebula project dust.",
     "type": "library",
     "require": {
-        "illuminate/console": "10.x-dev",
         "php": "^8.1"
     },
     "license": "MIT",
