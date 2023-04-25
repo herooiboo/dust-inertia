@@ -3,8 +3,8 @@
 namespace {{ namespace }};
 
 use Illuminate\Http\Request;
-use {{ rootNamespace }}Base\Controller;
-use {{ rootNamespace }}Base\Contracts\ResponseInterface;
+use Dust\Base\Controller;
+use Dust\Base\Contracts\ResponseInterface;
 use {{ responseNamespace }};
 use {{ requestNamespace }};
 use {{ serviceNamespace }};

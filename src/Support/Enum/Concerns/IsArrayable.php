@@ -9,7 +9,7 @@ trait IsArrayable
     public function toArray(): array
     {
         return [
-            'text'  => $this instanceof StringableInterface ? $this->toString() : $this->name,
+            'text' => $this instanceof StringableInterface ? $this->toString() : $this->name,
             'value' => $this->value,
         ];
     }

@@ -16,7 +16,7 @@ class ListenerMakeCommand extends BaseListenerMakeCommand
         if (! is_null($module = $this->option('module'))) {
             return get_module_namespace($rootNamespace, $module,
                 [
-                    'Manager',
+                    'Core',
                     'Listeners',
                 ]
             );
@@ -35,7 +35,7 @@ class ListenerMakeCommand extends BaseListenerMakeCommand
             '\\',
         ])) {
             if ($this->hasOption('module') && ($module = $this->option('module'))) {
-                $event = get_module_namespace($this->laravel->getNamespace(), $module, ['Manager', 'Events', $event]);
+                $event = get_module_namespace($this->laravel->getNamespace(), $module, ['Core', 'Events', $event]);
             } else {
                 $event = $this->laravel->getNamespace().'Events\\'.str_replace('/', '\\', $event);
             }

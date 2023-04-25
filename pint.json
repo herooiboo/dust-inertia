@@ -1,0 +1,7 @@
+{
+    "rules": {
+        "ordered_imports": {
+            "sort_algorithm": "length"
+        }
+    }
+}

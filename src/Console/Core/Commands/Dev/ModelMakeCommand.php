@@ -52,8 +52,8 @@ class ModelMakeCommand extends BaseModelMakeCommand
         }
 
         $arguments = [
-            'name'       => "create_{$table}_table",
-            '--create'   => $table,
+            'name' => "create_{$table}_table",
+            '--create' => $table,
             '--fullpath' => true,
         ];
 
@@ -82,9 +82,9 @@ class ModelMakeCommand extends BaseModelMakeCommand
         $modelName = $this->qualifyClass($this->getNameInput());
 
         $arguments = [
-            'name'       => "{$controller}Controller",
-            '--model'    => ($this->option('resource') || $this->option('api')) && ! $this->option('module') ? $modelName : null,
-            '--api'      => $this->option('api'),
+            'name' => "{$controller}Controller",
+            '--model' => ($this->option('resource') || $this->option('api')) && ! $this->option('module') ? $modelName : null,
+            '--api' => $this->option('api'),
             '--requests' => $this->option('requests') || $this->option('all'),
         ];
 
@@ -98,7 +98,7 @@ class ModelMakeCommand extends BaseModelMakeCommand
         $policy = Str::studly(class_basename($this->argument('name')));
 
         $arguments = [
-            'name'    => "{$policy}Policy",
+            'name' => "{$policy}Policy",
             '--model' => '\\'.$this->qualifyClass($this->getNameInput()),
         ];
 

@@ -3,8 +3,8 @@
 namespace Dust\Console\Commands;
 
 use Illuminate\Console\Command;
-use Dust\Console\Core\Concerns\AbsolutePathChecker;
 use Symfony\Component\Console\Attribute\AsCommand;
+use Dust\Console\Core\Concerns\AbsolutePathChecker;
 
 #[AsCommand(name: 'make:story')]
 class StoryMakeCommand extends Command
@@ -28,9 +28,9 @@ class StoryMakeCommand extends Command
     protected function createController(string $name, string $module, string|null $guard)
     {
         $arguments = [
-            'name'     => $name,
+            'name' => $name,
             '--module' => $module,
-            '--all'    => true,
+            '--all' => true,
         ];
 
         if ($guard) {
@@ -43,7 +43,7 @@ class StoryMakeCommand extends Command
     protected function createTest(string $name, string $module, string|null $guard)
     {
         $arguments = [
-            'name'     => $name,
+            'name' => $name,
             '--module' => $module,
         ];
 

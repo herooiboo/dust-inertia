@@ -65,7 +65,7 @@ class ControllerMakeCommand extends BaseControllerMakeCommand
 
         return [
             '{{ requestNamespace }}' => $requestClass,
-            '{{ request }}'          => class_basename($requestClass),
+            '{{ request }}' => class_basename($requestClass),
         ];
     }
 
@@ -83,7 +83,7 @@ class ControllerMakeCommand extends BaseControllerMakeCommand
 
         return [
             '{{ responseNamespace }}' => $responseClass,
-            '{{ response }}'          => class_basename($responseClass),
+            '{{ response }}' => class_basename($responseClass),
         ];
     }
 
@@ -100,7 +100,7 @@ class ControllerMakeCommand extends BaseControllerMakeCommand
 
         return [
             '{{ serviceNamespace }}' => $serviceClass,
-            '{{ service }}'          => class_basename($serviceClass),
+            '{{ service }}' => class_basename($serviceClass),
         ];
     }
 
@@ -155,7 +155,7 @@ class ControllerMakeCommand extends BaseControllerMakeCommand
     protected function createRequest(string $name, string $module)
     {
         $arguments = [
-            'name'     => $name,
+            'name' => $name,
             '--module' => $module,
         ];
         if ($guard = $this->option('guard')) {
@@ -167,7 +167,7 @@ class ControllerMakeCommand extends BaseControllerMakeCommand
     protected function createResponse(string $name, string $module)
     {
         $arguments = [
-            'name'     => $name,
+            'name' => $name,
             '--module' => $module,
         ];
         if ($guard = $this->option('guard')) {
@@ -179,7 +179,7 @@ class ControllerMakeCommand extends BaseControllerMakeCommand
     protected function createService(string $name, string $module)
     {
         $arguments = [
-            'name'     => $name,
+            'name' => $name,
             '--module' => $module,
         ];
         if ($guard = $this->option('guard')) {

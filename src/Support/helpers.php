@@ -30,7 +30,7 @@ if (! function_exists('get_module_namespace')) {
 
         $subdirectories = array_filter($subdirectories);
 
-        return  implode('\\', [str_replace('\\', '', $rootNamespace), $modulesRoot, ucfirst($module), ...$subdirectories]);
+        return implode('\\', [str_replace('\\', '', $rootNamespace), $modulesRoot, ucfirst($module), ...$subdirectories]);
     }
 }
 

@@ -1,6 +1,5 @@
 <?php
 
-
 return [
     'modules' => [
         'defaults' => [
@@ -8,6 +7,6 @@ return [
         ],
         'paths' => [
             'Modules',
-        ]
-    ]
+        ],
+    ],
 ];

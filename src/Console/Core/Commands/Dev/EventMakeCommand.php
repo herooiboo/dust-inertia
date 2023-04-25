@@ -14,7 +14,7 @@ class EventMakeCommand extends BaseEventMakeCommand
         if (! is_null($module = $this->option('module'))) {
             return get_module_namespace($rootNamespace, $module,
                 [
-                    'Manager',
+                    'Core',
                     'Events',
                 ]
             );

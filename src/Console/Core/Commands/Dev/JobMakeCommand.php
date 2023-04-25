@@ -14,7 +14,7 @@ class JobMakeCommand extends BaseJobMakeCommand
         if (! is_null($module = $this->option('module'))) {
             return get_module_namespace($rootNamespace, $module,
                 [
-                    'Manager',
+                    'Core',
                     'Jobs',
                 ]
             );

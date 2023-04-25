@@ -45,15 +45,15 @@ class RepositoryMakeCommand extends GeneratorCommand
 
         $replace = [
             '{{ repositoryNamespace }}' => $namespace,
-            'NamespacedDummyModel'      => $namespaceModel,
-            '{{ namespacedModel }}'     => $namespaceModel,
-            '{{namespacedModel}}'       => $namespaceModel,
-            'DummyModel'                => $model,
-            '{{ model }}'               => $model,
-            '{{ modelVariable }}'       => lcfirst($model),
-            '{{model}}'                 => $model,
-            '{{ repository }}'          => $repository,
-            '{{repository}}'            => $repository,
+            'NamespacedDummyModel' => $namespaceModel,
+            '{{ namespacedModel }}' => $namespaceModel,
+            '{{namespacedModel}}' => $namespaceModel,
+            'DummyModel' => $model,
+            '{{ model }}' => $model,
+            '{{ modelVariable }}' => lcfirst($model),
+            '{{model}}' => $model,
+            '{{ repository }}' => $repository,
+            '{{repository}}' => $repository,
         ];
 
         return str_replace(
