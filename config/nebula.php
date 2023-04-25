@@ -5,18 +5,18 @@ return [
         'defaults' => [
             'path' => 'Modules',
         ],
-        'paths'    => [
+        'paths' => [
             'Modules',
         ],
     ],
     'logging' => [
         'channels' => [
-            'info'      => 'daily',
-            'debug'     => 'daily',
-            'warning'   => 'daily',
-            'error'     => 'daily',
+            'info' => 'daily',
+            'debug' => 'daily',
+            'warning' => 'daily',
+            'error' => 'daily',
             'emergency' => 'daily',
-            'critical'  => 'daily',
-        ]
-    ]
+            'critical' => 'daily',
+        ],
+    ],
 ];
