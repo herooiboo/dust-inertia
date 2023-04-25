@@ -1,6 +1,6 @@
 {
     "name": "cyberbugz/dust",
-    "version": "v1.0.2",
+    "version": "v1.0.3",
     "description": "The Nebula project dust.",
     "type": "library",
     "require": {
@@ -24,11 +24,11 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Dust\\Providers\\AritsanServiceProvider",
+                "Dust\\Providers\\DustServiceProvider",
                 "Dust\\Providers\\EventServiceProvider",
                 "Dust\\Providers\\MigrationServiceProvider",
                 "Dust\\Providers\\RouteServiceProvider",
-                "Dust\\Providers\\DustServiceProvider"
+                "Dust\\Providers\\AritsanServiceProvider"
             ]
         }
     },

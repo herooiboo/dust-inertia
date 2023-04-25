@@ -3,6 +3,7 @@
 namespace Dust\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Dust\Console\Commands\StoryMakeCommand;
 
 class DustServiceProvider extends ServiceProvider
 {
@@ -21,6 +22,11 @@ class DustServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                StoryMakeCommand::class,
+            ]);
+        }
         $this->publishes([
             __DIR__.'/../config/nebula.php' => config_path('nebula.php'),
         ]);
