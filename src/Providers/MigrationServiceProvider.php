@@ -2,7 +2,7 @@
 
 namespace Dust\Providers;
 
-use App\Console\Core\Commands\Database\MigrateMakeCommand;
+use Dust\Console\Core\Commands\Database\MigrateMakeCommand;
 
 class MigrationServiceProvider extends \Illuminate\Database\MigrationServiceProvider
 {

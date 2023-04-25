@@ -24,7 +24,7 @@ class EventServiceProvider extends ServiceProvider
     protected function moduleListener(): array
     {
         return array_reduce(app_modules(), function ($listeners, $module) {
-            $moduleListeners = get_module_path($module, ['Manager', 'Listeners']);
+            $moduleListeners = get_module_path($module, ['Core', 'Listeners']);
             if (file_exists($moduleListeners)) {
                 $listeners[] = $moduleListeners;
             }
