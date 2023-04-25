@@ -27,7 +27,8 @@
                 "Dust\\Providers\\DustServiceProvider",
                 "Dust\\Providers\\EventServiceProvider",
                 "Dust\\Providers\\MigrationServiceProvider",
-                "Dust\\Providers\\RouteServiceProvider"
+                "Dust\\Providers\\RouteServiceProvider",
+                "Dust\\Providers\\ArtisanServiceProvider"
             ]
         }
     },
