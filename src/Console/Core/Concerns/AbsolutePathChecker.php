@@ -6,14 +6,17 @@ trait AbsolutePathChecker
 {
     protected function checkAbsolutePath(): void
     {
-        if ($absolute = $this->option('absolute')) {
+        if ($absolute = $this->option('absolute', null)) {
             config()->set('app.modules_path', ucfirst($absolute));
         }
     }
 
     protected function resolveStubPath($stub): string
     {
-        if (is_null($this->option('module'))) {
+        if (
+            (!$this->hasOption('module') || is_null($this->option('module'))) &&
+            (!$this->hasArgument('module') || is_null($this->argument('module')))
+        ) {
             return parent::resolveStubPath($stub);
         }
 

@@ -2,7 +2,7 @@
 
 namespace {{ repositoryNamespace }};
 
-use App\Base\Repository;
+use Dust\Base\Repository;
 use {{ namespacedModel }};
 
 class {{ repository }}Repository extends Repository

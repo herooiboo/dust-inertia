@@ -2,6 +2,7 @@
 
 namespace Dust\Console\Core\Commands\Dev;
 
+use Dust\Console\Core\Concerns\AbsolutePathChecker;
 use Illuminate\Support\Str;
 use Illuminate\Console\GeneratorCommand;
 use Dust\Console\Core\Concerns\ModelQualifier;
@@ -11,7 +12,7 @@ use Symfony\Component\Console\Input\InputArgument;
 #[AsCommand(name: 'make:repository')]
 class RepositoryMakeCommand extends GeneratorCommand
 {
-    use ModelQualifier;
+    use ModelQualifier, AbsolutePathChecker;
 
     protected $name = 'make:repository';
 
@@ -22,13 +23,6 @@ class RepositoryMakeCommand extends GeneratorCommand
     protected function getStub(): string
     {
         return $this->resolveStubPath('/stubs/repository.stub');
-    }
-
-    protected function resolveStubPath($stub): string
-    {
-        return file_exists($customPath = $this->laravel->basePath(trim($stub, '/')))
-            ? $customPath
-            : __DIR__.$stub;
     }
 
     protected function buildClass($name): array|string
