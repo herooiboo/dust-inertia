@@ -14,8 +14,8 @@ trait AbsolutePathChecker
     protected function resolveStubPath($stub): string
     {
         if (
-            (!$this->hasOption('module') || is_null($this->option('module'))) &&
-            (!$this->hasArgument('module') || is_null($this->argument('module')))
+            (! $this->hasOption('module') || is_null($this->option('module'))) &&
+            (! $this->hasArgument('module') || is_null($this->argument('module')))
         ) {
             return parent::resolveStubPath($stub);
         }

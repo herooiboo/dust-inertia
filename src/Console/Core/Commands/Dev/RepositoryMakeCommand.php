@@ -2,12 +2,12 @@
 
 namespace Dust\Console\Core\Commands\Dev;
 
-use Dust\Console\Core\Concerns\AbsolutePathChecker;
 use Illuminate\Support\Str;
 use Illuminate\Console\GeneratorCommand;
 use Dust\Console\Core\Concerns\ModelQualifier;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputArgument;
+use Dust\Console\Core\Concerns\AbsolutePathChecker;
 
 #[AsCommand(name: 'make:repository')]
 class RepositoryMakeCommand extends GeneratorCommand
