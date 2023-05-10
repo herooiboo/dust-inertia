@@ -32,7 +32,7 @@ class ControllerMakeCommand extends BaseControllerMakeCommand
         parent::handle();
     }
 
-    protected function buildClass($name)
+    protected function buildClass($name): string
     {
         $replace = [];
         $baseName = $name;
