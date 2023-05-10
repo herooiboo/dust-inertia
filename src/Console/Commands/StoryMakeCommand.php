@@ -15,7 +15,7 @@ class StoryMakeCommand extends Command
 
     protected $description = 'Create a user story';
 
-    public function handle()
+    public function handle(): void
     {
         $this->checkAbsolutePath();
         $name = $this->argument('name');
@@ -23,9 +23,10 @@ class StoryMakeCommand extends Command
         $guard = $this->option('guard');
         $this->createController($name, $module, $guard);
         $this->createTest($name, $module, $guard);
+        $this->checkRoutes($module, $guard);
     }
 
-    protected function createController(string $name, string $module, string|null $guard)
+    protected function createController(string $name, string $module, string|null $guard): void
     {
         $arguments = [
             'name' => $name,
@@ -40,7 +41,7 @@ class StoryMakeCommand extends Command
         $this->call('make:controller', $arguments);
     }
 
-    protected function createTest(string $name, string $module, string|null $guard)
+    protected function createTest(string $name, string $module, string|null $guard): void
     {
         $arguments = [
             'name' => $name,
@@ -51,5 +52,23 @@ class StoryMakeCommand extends Command
             $arguments['--guard'] = $guard;
         }
         $this->call('make:test', $arguments);
+    }
+
+    protected function checkRoutes($module, string|null $guard): void
+    {
+        $guard = strtolower($guard ?: 'api');
+        $routesFilePath = get_module_path($module, ['Http', 'Routes', "$guard.php"]);
+
+        if (file_exists($routesFilePath)) {
+            return;
+        }
+
+        $this->initiateRouteFile($routesFilePath);
+    }
+
+    protected function initiateRouteFile(string $routesFilePath): void
+    {
+        mkdir(dirname($routesFilePath), 0755, true);
+        file_put_contents($routesFilePath, "<?php\n\nuse Illuminate\Support\Facades\Route;\n\n");
     }
 }
