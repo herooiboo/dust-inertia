@@ -2,11 +2,11 @@
 
 namespace Dust\Providers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Cache\RateLimiting\Limit;
-use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -17,45 +17,93 @@ class RouteServiceProvider extends ServiceProvider
         $this->configureRateLimiting();
 
         $this->routes(function () {
-            $this->registerModuleApiRoutes();
-
-            Route::middleware('test')
-                ->prefix('test')
-                ->group(base_path('routes/test.php'));
+            foreach ($this->guards() as $config) {
+                if ($config['path'] === 'module') {
+                    $this->registerModuleRoutes($config['prefix'], $config['middleware'], $config['file_name']);
+                } else {
+                    $this->registerRootRoutes($config['prefix'], $config['middleware'], $config['file_name']);
+                }
+            }
         });
     }
 
     protected function configureRateLimiting(): void
     {
-        RateLimiter::for('api', function (Request $request) {
-            return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
-        });
+        foreach ($this->guards() as $guard => $config) {
+            if ($config['rate_limit_max']) {
+                RateLimiter::for($guard, function (Request $request) use ($config) {
+                    return Limit::perMinute($config['rate_limit_max'])->by($request->user()?->id ?: $request->ip());
+                });
+            }
+        }
     }
 
-    protected function registerModuleApiRoutes(): void
+    protected function registerRootRoutes(string $prefix, string $middleware = null, string $routesFileName = null): void
     {
-        $this->registerModuleRoutes('api');
+        if (!$middleware) {
+            $middleware = $prefix;
+        }
+
+        if (!$routesFileName) {
+            $routesFileName = $prefix;
+        }
+
+        $path = base_path("routes/$routesFileName.php");
+        if (!file_exists($path)) {
+            return;
+        }
+
+        Route::prefix($prefix)
+            ->middleware($middleware)
+            ->group($path);
     }
 
     protected function registerModuleRoutes(string $prefix, string $middleware = null, string $routesFileName = null): void
     {
-        if (! $middleware) {
+        if (!$middleware) {
             $middleware = $prefix;
         }
 
-        if (! $routesFileName) {
+        if (!$routesFileName) {
             $routesFileName = $prefix;
         }
 
         $registrar = Route::prefix($prefix)->middleware($middleware);
 
         $modulesPath = modules_path();
-        $modules = array_filter(scandir($modulesPath), fn ($module) => ! in_array($module, ['.', '..']));
+        $modules = array_filter(scandir($modulesPath), fn($module) => !in_array($module, ['.', '..']));
         foreach ($modules as $module) {
             $apiRoutes = implode(DIRECTORY_SEPARATOR, [$modulesPath, $module, 'Http', 'Routes', "$routesFileName.php"]);
             if (file_exists($apiRoutes)) {
                 $registrar->group($apiRoutes);
             }
         }
+    }
+
+    protected function guards(): array
+    {
+        $default = [
+            'api' => [
+                'path' => 'module',
+                'prefix' => 'api',
+                'middleware' => 'api',
+                'file_name' => 'api',
+                'rate_limit_max' => 60,
+            ],
+            'test' => [
+                'path' => 'root',
+                'prefix' => 'test',
+                'middleware' => 'test',
+                'file_name' => 'test',
+                'rate_limit_max' => 0,
+            ],
+        ];
+
+        return array_merge_recursive($default, $this->extendGuards());
+    }
+
+    protected function extendGuards(): array
+    {
+        return [];
     }
 }
