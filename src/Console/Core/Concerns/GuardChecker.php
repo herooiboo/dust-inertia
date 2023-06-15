@@ -18,7 +18,7 @@ trait GuardChecker
         }
 
         if (! in_array(strtolower($guard), array_keys(config('auth.guards', [])))) {
-            throw new UnknownGuardException();
+            throw new UnknownGuardException($guard);
         }
 
         return ucfirst($guard);
