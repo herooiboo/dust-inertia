@@ -2,8 +2,13 @@
 
 namespace Dust\Console\Core\Concerns;
 
+use Dust\Exceptions\UnknownGuardException;
+
 trait GuardChecker
 {
+    /**
+     * @throws UnknownGuardException
+     */
     protected function checkGuard(): string|null
     {
         $guard = $this->option('guard');
@@ -13,7 +18,7 @@ trait GuardChecker
         }
 
         if (! in_array(strtolower($guard), array_keys(config('auth.guards', [])))) {
-            return null;
+            throw new UnknownGuardException();
         }
 
         return ucfirst($guard);

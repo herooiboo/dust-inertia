@@ -68,7 +68,11 @@ class StoryMakeCommand extends Command
 
     protected function initiateRouteFile(string $routesFilePath): void
     {
-        mkdir(dirname($routesFilePath), 0755, true);
+        $dir = dirname($routesFilePath);
+        if (!file_exists($dir)) {
+            mkdir($dir, 0755, true);
+        }
+
         file_put_contents($routesFilePath, "<?php\n\nuse Illuminate\Support\Facades\Route;\n\n");
     }
 }
