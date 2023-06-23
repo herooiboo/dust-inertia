@@ -18,7 +18,7 @@ class SeedCommand extends \Illuminate\Database\Console\Seeds\SeedCommand
             return parent::getSeeder();
         }
 
-        $class = get_module_namespace('Dust', $module,
+        $class = get_module_namespace($this->laravel->getNamespace(), $module,
             [
                 'Domain',
                 'Database',
