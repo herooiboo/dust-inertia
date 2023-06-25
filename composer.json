@@ -1,6 +1,6 @@
 {
     "name": "cyberbugz/dust",
-    "version": "v2.2.4",
+    "version": "v3.0.0",
     "description": "The Nebula project dust.",
     "type": "library",
     "require": {
