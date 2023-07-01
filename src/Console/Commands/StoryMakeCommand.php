@@ -20,6 +20,9 @@ class StoryMakeCommand extends Command
         $this->checkAbsolutePath();
         $name = $this->argument('name');
         $module = $this->option('module');
+        if (!$module) {
+            $this->error('Option module is required | --M|module.');
+        }
         $guard = $this->option('guard');
         $this->createController($name, $module, $guard);
         $this->createTest($name, $module, $guard);
