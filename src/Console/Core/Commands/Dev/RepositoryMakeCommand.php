@@ -29,11 +29,11 @@ class RepositoryMakeCommand extends GeneratorCommand
     {
         $repository = class_basename(Str::ucfirst(str_replace('Repository', '', $name)));
 
-        $namespaceModel = $this->qualifyModel($this->argument('model'));
+        $namespaceModel = $this->qualifyModel($this->option('model'));
 
         $model = class_basename($namespaceModel);
 
-        $namespace = get_module_namespace($this->rootNamespace(), $this->argument('module'), [
+        $namespace = get_module_namespace($this->rootNamespace(), $this->option('module'), [
             'Domain', 'Repositories',
         ]);
 
@@ -57,7 +57,7 @@ class RepositoryMakeCommand extends GeneratorCommand
 
     protected function getPath($name): string
     {
-        $module = $this->argument('module');
+        $module = $this->option('module');
         $name = (string)Str::of($name)->replaceFirst(get_module_namespace($this->laravel->getNamespace(), $module, [
             'Domain', 'Repositories',
         ]), '')->finish('Repository');
@@ -84,7 +84,7 @@ class RepositoryMakeCommand extends GeneratorCommand
 
         $modelName = array_pop($names);
 
-        return get_module_namespace($this->rootNamespace(), $this->argument('module'), [
+        return get_module_namespace($this->rootNamespace(), $this->option('module'), [
             'Domain', 'Entities', $modelName,
         ]);
     }
