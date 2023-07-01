@@ -99,7 +99,7 @@ class RepositoryMakeCommand extends GeneratorCommand
 
     protected function getDefaultNamespace($rootNamespace): string
     {
-        return get_module_namespace($this->laravel->getNamespace(), $this->argument('module'),
+        return get_module_namespace($this->laravel->getNamespace(), $this->option('module'),
             [
                 'Domain',
                 'Repositories',
