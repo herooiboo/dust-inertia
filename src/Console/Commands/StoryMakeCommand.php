@@ -22,6 +22,7 @@ class StoryMakeCommand extends Command
         $module = $this->option('module');
         if (!$module) {
             $this->error('Option module is required | --M|module.');
+            return;
         }
         $guard = $this->option('guard');
         $this->createController($name, $module, $guard);
