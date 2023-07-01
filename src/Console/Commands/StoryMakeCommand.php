@@ -11,7 +11,7 @@ class StoryMakeCommand extends Command
 {
     use AbsolutePathChecker;
 
-    protected $signature = 'make:story {name : name of the story} {--module|M= : name of the module} {--guard|G= : Specify environment guard} {--absolute|A= : Specify modules absolute path}';
+    protected $signature = 'make:story {name : Name of the story} {--M|module= : Name of the module} {--G|guard= : Specify environment guard} {--A|absolute= : Specify modules absolute path}';
 
     protected $description = 'Create a user story';
 
@@ -29,9 +29,9 @@ class StoryMakeCommand extends Command
     protected function createController(string $name, string $module, string|null $guard): void
     {
         $arguments = [
-            'name' => $name,
+            'name'     => $name,
             '--module' => $module,
-            '--all' => true,
+            '--all'    => true,
         ];
 
         if ($guard) {
@@ -44,7 +44,7 @@ class StoryMakeCommand extends Command
     protected function createTest(string $name, string $module, string|null $guard): void
     {
         $arguments = [
-            'name' => $name,
+            'name'     => $name,
             '--module' => $module,
         ];
 

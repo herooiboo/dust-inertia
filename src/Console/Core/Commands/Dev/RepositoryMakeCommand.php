@@ -5,8 +5,8 @@ namespace Dust\Console\Core\Commands\Dev;
 use Illuminate\Support\Str;
 use Illuminate\Console\GeneratorCommand;
 use Dust\Console\Core\Concerns\ModelQualifier;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Attribute\AsCommand;
-use Symfony\Component\Console\Input\InputArgument;
 use Dust\Console\Core\Concerns\AbsolutePathChecker;
 
 #[AsCommand(name: 'make:repository')]
@@ -39,26 +39,26 @@ class RepositoryMakeCommand extends GeneratorCommand
 
         $replace = [
             '{{ repositoryNamespace }}' => $namespace,
-            'NamespacedDummyModel' => $namespaceModel,
-            '{{ namespacedModel }}' => $namespaceModel,
-            '{{namespacedModel}}' => $namespaceModel,
-            'DummyModel' => $model,
-            '{{ model }}' => $model,
-            '{{ modelVariable }}' => lcfirst($model),
-            '{{model}}' => $model,
-            '{{ repository }}' => $repository,
-            '{{repository}}' => $repository,
+            'NamespacedDummyModel'      => $namespaceModel,
+            '{{ namespacedModel }}'     => $namespaceModel,
+            '{{namespacedModel}}'       => $namespaceModel,
+            'DummyModel'                => $model,
+            '{{ model }}'               => $model,
+            '{{ modelVariable }}'       => lcfirst($model),
+            '{{model}}'                 => $model,
+            '{{ repository }}'          => $repository,
+            '{{repository}}'            => $repository,
         ];
 
         return str_replace(
-            array_keys($replace), array_values($replace), parent::buildClass($name)
+            array_keys($replace), array_values($replace), parent::buildClass($name),
         );
     }
 
     protected function getPath($name): string
     {
         $module = $this->argument('module');
-        $name = (string) Str::of($name)->replaceFirst(get_module_namespace($this->laravel->getNamespace(), $module, [
+        $name = (string)Str::of($name)->replaceFirst(get_module_namespace($this->laravel->getNamespace(), $module, [
             'Domain', 'Repositories',
         ]), '')->finish('Repository');
         if (str_starts_with($name, '\\')) {
@@ -92,8 +92,8 @@ class RepositoryMakeCommand extends GeneratorCommand
     protected function getOptions(): array
     {
         return array_merge(parent::getOptions(), [
-            ['model', 'm', InputArgument::REQUIRED, 'The name of the model'],
-            ['module', 'M', InputArgument::REQUIRED, 'The name of the module'],
+            ['model', 'm', InputOption::VALUE_REQUIRED, 'The name of the model'],
+            ['module', 'M', InputOption::VALUE_REQUIRED, 'The name of the module'],
         ]);
     }
 
@@ -103,7 +103,7 @@ class RepositoryMakeCommand extends GeneratorCommand
             [
                 'Domain',
                 'Repositories',
-            ]
+            ],
         );
     }
 }
