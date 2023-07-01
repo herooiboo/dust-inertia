@@ -2,12 +2,13 @@
 
 namespace Dust\Console\Core\Commands\Dev;
 
+use Dust\Console\Core\Concerns\GuardChecker;
 use Dust\Console\Core\Concerns\OptionsExtender;
 use Illuminate\Foundation\Console\ResourceMakeCommand as BaseResourceMakeCommand;
 
 class ResourceMakeCommand extends BaseResourceMakeCommand
 {
-    use OptionsExtender;
+    use OptionsExtender, GuardChecker;
 
     protected function getDefaultNamespace($rootNamespace): string
     {
@@ -16,6 +17,7 @@ class ResourceMakeCommand extends BaseResourceMakeCommand
                 [
                     'Http',
                     'Resources',
+                    $this->checkGuard(),
                 ]
             );
         }

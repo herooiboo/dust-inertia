@@ -89,11 +89,11 @@ class RepositoryMakeCommand extends GeneratorCommand
         ]);
     }
 
-    protected function getArguments(): array
+    protected function getOptions(): array
     {
-        return array_merge(parent::getArguments(), [
-            ['model', InputArgument::REQUIRED, 'The name of the model'],
-            ['module', InputArgument::REQUIRED, 'The name of the module'],
+        return array_merge(parent::getOptions(), [
+            ['model', 'm', InputArgument::REQUIRED, 'The name of the model'],
+            ['module', 'M', InputArgument::REQUIRED, 'The name of the module'],
         ]);
     }
 

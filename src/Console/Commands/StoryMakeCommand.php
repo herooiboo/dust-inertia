@@ -11,7 +11,7 @@ class StoryMakeCommand extends Command
 {
     use AbsolutePathChecker;
 
-    protected $signature = 'make:story {name : name of the story} {module : name of the module} {--guard= : Specify environment guard} {--absolute= : Specify modules absolute path}';
+    protected $signature = 'make:story {name : name of the story} {--module|M= : name of the module} {--guard|G= : Specify environment guard} {--absolute|A= : Specify modules absolute path}';
 
     protected $description = 'Create a user story';
 
@@ -19,7 +19,7 @@ class StoryMakeCommand extends Command
     {
         $this->checkAbsolutePath();
         $name = $this->argument('name');
-        $module = $this->argument('module');
+        $module = $this->option('module');
         $guard = $this->option('guard');
         $this->createController($name, $module, $guard);
         $this->createTest($name, $module, $guard);
