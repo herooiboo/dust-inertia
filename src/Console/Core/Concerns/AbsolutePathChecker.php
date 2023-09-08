@@ -7,7 +7,7 @@ trait AbsolutePathChecker
     protected function checkAbsolutePath(): void
     {
         if ($absolute = $this->option('absolute', null)) {
-            config()->set('app.modules_path', ucfirst($absolute));
+            config()->set('nebula.modules.defaults.path', ucfirst($absolute));
         }
     }
 
