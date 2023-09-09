@@ -4,13 +4,13 @@ namespace Dust\Http\Router\Enum;
 
 enum Http
 {
-    case Get;
-    case Post;
-    case Delete;
-    case Put;
-    case Patch;
-    case Options;
-    case Head;
-    case Connect;
-    case Trace;
+    case GET;
+    case POST;
+    case DELETE;
+    case PUT;
+    case PATCH;
+    case OPTIONS;
+    case HEAD;
+    case CONNECT;
+    case TRACE;
 }

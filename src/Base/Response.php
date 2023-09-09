@@ -180,5 +180,5 @@ abstract class Response implements ResponseInterface
         return false;
     }
 
-    abstract protected function createResource(mixed $resource): JsonResponse|JsonResource|LengthAwarePaginator|StreamedResponse|RedirectResponse;
+    abstract protected function createResource(mixed $resource): mixed;
 }
