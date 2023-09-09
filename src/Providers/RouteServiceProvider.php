@@ -138,7 +138,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function registerAttributeRoutes(array $config): void
     {
-        foreach (config('nebula.paths') as $path) {
+        foreach (config('nebula.modules.paths') as $path) {
             $modulesPath = app_path($path);
             if (! file_exists($modulesPath)) {
                 return;
