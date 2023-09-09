@@ -36,8 +36,9 @@ abstract class Controller implements RequestHandlerInterface
     final protected function resolveBindings(): void
     {
         $routeParams = [];
-        $bindings = array_reduce($this->bindings, function($list, $binding) {
+        $bindings = array_reduce($this->bindings, function ($list, $binding) {
             $list[class_basename($binding)] = $binding;
+
             return $list;
         }, []);
         foreach ($this->request->route()->parameters as $key => $value) {
@@ -51,7 +52,7 @@ abstract class Controller implements RequestHandlerInterface
     {
         $instance = new $class;
         $record = $class::where($instance->getRouteKeyName(), $value)->first();
-        if (!$record) {
+        if (! $record) {
             $e = new ModelNotFoundException();
             $e->setModel($class, [$value]);
             throw $e;

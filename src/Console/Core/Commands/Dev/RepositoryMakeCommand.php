@@ -39,15 +39,15 @@ class RepositoryMakeCommand extends GeneratorCommand
 
         $replace = [
             '{{ repositoryNamespace }}' => $namespace,
-            'NamespacedDummyModel'      => $namespaceModel,
-            '{{ namespacedModel }}'     => $namespaceModel,
-            '{{namespacedModel}}'       => $namespaceModel,
-            'DummyModel'                => $model,
-            '{{ model }}'               => $model,
-            '{{ modelVariable }}'       => lcfirst($model),
-            '{{model}}'                 => $model,
-            '{{ repository }}'          => $repository,
-            '{{repository}}'            => $repository,
+            'NamespacedDummyModel' => $namespaceModel,
+            '{{ namespacedModel }}' => $namespaceModel,
+            '{{namespacedModel}}' => $namespaceModel,
+            'DummyModel' => $model,
+            '{{ model }}' => $model,
+            '{{ modelVariable }}' => lcfirst($model),
+            '{{model}}' => $model,
+            '{{ repository }}' => $repository,
+            '{{repository}}' => $repository,
         ];
 
         return str_replace(
@@ -58,7 +58,7 @@ class RepositoryMakeCommand extends GeneratorCommand
     protected function getPath($name): string
     {
         $module = $this->option('module');
-        $name = (string)Str::of($name)->replaceFirst(get_module_namespace($this->laravel->getNamespace(), $module, [
+        $name = (string) Str::of($name)->replaceFirst(get_module_namespace($this->laravel->getNamespace(), $module, [
             'Domain', 'Repositories',
         ]), '')->finish('Repository');
         if (str_starts_with($name, '\\')) {

@@ -20,8 +20,9 @@ class StoryMakeCommand extends Command
         $this->checkAbsolutePath();
         $name = $this->argument('name');
         $module = $this->option('module');
-        if (!$module) {
+        if (! $module) {
             $this->error('Option module is required | --M|module.');
+
             return;
         }
         $guard = $this->option('guard');
@@ -33,9 +34,9 @@ class StoryMakeCommand extends Command
     protected function createController(string $name, string $module, string|null $guard): void
     {
         $arguments = [
-            'name'     => $name,
+            'name' => $name,
             '--module' => $module,
-            '--all'    => true,
+            '--all' => true,
         ];
 
         if ($guard) {
@@ -48,7 +49,7 @@ class StoryMakeCommand extends Command
     protected function createTest(string $name, string $module, string|null $guard): void
     {
         $arguments = [
-            'name'     => $name,
+            'name' => $name,
             '--module' => $module,
         ];
 
@@ -73,7 +74,7 @@ class StoryMakeCommand extends Command
     protected function initiateRouteFile(string $routesFilePath): void
     {
         $dir = dirname($routesFilePath);
-        if (!file_exists($dir)) {
+        if (! file_exists($dir)) {
             mkdir($dir, 0755, true);
         }
 
