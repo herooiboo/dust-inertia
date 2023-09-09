@@ -35,7 +35,7 @@ class RouteServiceProvider extends ServiceProvider
                         $this->registerRootRoutes($config['prefix'], $config['middleware'], $config['file_name']);
                     }
                 } else {
-                    $this->registerAttributeRoutes($guard, $config);
+                    $this->registerAttributeRoutes($config);
                 }
             }
         });
@@ -174,7 +174,7 @@ class RouteServiceProvider extends ServiceProvider
                 case Guard::class:
                     $guard = $attribute->getArguments()['name'];
                     if ($guard !== $middleware) {
-                        $middleware = $guard;
+                        return;
                     }
                     break;
                 case Prefix::class:
