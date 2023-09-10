@@ -123,7 +123,7 @@ class RouteServiceProvider extends ServiceProvider
             ],
         ];
 
-        return array_merge_recursive($default, $this->extendGuards());
+        return array_merge($default, $this->extendGuards());
     }
 
     protected function extendGuards(): array
