@@ -5,7 +5,15 @@ namespace {{ namespace }};
 use Dust\Base\Controller;
 use Dust\Base\Contracts\ResponseInterface;
 use Illuminate\Http\Request;
+use \Dust\Http\Router\Attributes\Guard;
+use \Dust\Http\Router\Attributes\Middleware;
+use \Dust\Http\Router\Attributes\Prefix;
+use \Dust\Http\Router\Attributes\Route;
 
+//#[Prefix('dust')]
+//#[Middleware(['auth:api'])]
+//#[Guard('api')]
+//#[Route(Http::GET, 'dust/{id}', 'api.dust')]
 class {{ class }} extends Controller
 {
     public function handle(ResponseInterface $response, Request $request): mixed

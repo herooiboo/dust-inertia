@@ -2,20 +2,20 @@
 
 namespace Dust\Providers;
 
-use Dust\Http\Router\Attributes\Guard;
-use Dust\Http\Router\Attributes\Middleware;
-use Dust\Http\Router\Attributes\Prefix;
-use Dust\Http\Router\Attributes\Route as RouteAttribute;
-use Dust\Http\Router\Enum\RoutePath;
-use Dust\Http\Router\Enum\Router as RouterEnum;
-use Illuminate\Cache\RateLimiting\Limit;
-use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
-use Illuminate\Http\Request;
-use Illuminate\Routing\Router;
-use Illuminate\Support\Facades\RateLimiter;
-use Illuminate\Support\Facades\Route;
 use ReflectionClass;
 use ReflectionException;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Router;
+use Dust\Http\Router\Enum\RoutePath;
+use Illuminate\Support\Facades\Route;
+use Dust\Http\Router\Attributes\Guard;
+use Dust\Http\Router\Attributes\Prefix;
+use Illuminate\Cache\RateLimiting\Limit;
+use Dust\Http\Router\Attributes\Middleware;
+use Illuminate\Support\Facades\RateLimiter;
+use Dust\Http\Router\Enum\Router as RouterEnum;
+use Dust\Http\Router\Attributes\Route as RouteAttribute;
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -53,16 +53,16 @@ class RouteServiceProvider extends ServiceProvider
 
     protected function registerRootRoutes(string $prefix, string $middleware = null, string $routesFileName = null): void
     {
-        if (!$middleware) {
+        if (! $middleware) {
             $middleware = $prefix;
         }
 
-        if (!$routesFileName) {
+        if (! $routesFileName) {
             $routesFileName = $prefix;
         }
 
         $path = base_path("routes/$routesFileName.php");
-        if (!file_exists($path)) {
+        if (! file_exists($path)) {
             return;
         }
 
@@ -73,11 +73,11 @@ class RouteServiceProvider extends ServiceProvider
 
     protected function registerModuleRoutes(string $prefix, string $middleware = null, string $routesFileName = null): void
     {
-        if (!$middleware) {
+        if (! $middleware) {
             $middleware = $prefix;
         }
 
-        if (!$routesFileName) {
+        if (! $routesFileName) {
             $routesFileName = $prefix;
         }
 
@@ -85,10 +85,10 @@ class RouteServiceProvider extends ServiceProvider
 
         foreach (config('nebula.modules.paths') as $path) {
             $modulesPath = app_path($path);
-            if (!file_exists($modulesPath)) {
+            if (! file_exists($modulesPath)) {
                 return;
             }
-            $modules = array_filter(scandir($modulesPath), fn($module) => !in_array($module, ['.', '..']));
+            $modules = array_filter(scandir($modulesPath), fn ($module) => ! in_array($module, ['.', '..']));
             foreach ($modules as $module) {
                 $routes = implode(DIRECTORY_SEPARATOR, [$modulesPath, $module, 'Http', 'Routes', "$routesFileName.php"]);
                 if (file_exists($routes)) {
@@ -103,9 +103,9 @@ class RouteServiceProvider extends ServiceProvider
         $default = [
             'api' => [
                 'routes' => [
-                    'type' => RouterEnum::File,
-                    'path' => RoutePath::Module, // should be none for route type Router::Attribute
-                    'file_name' => 'api', // should be null for route type Router::Attribute
+                    'type' => RouterEnum::Attribute, // should be none for route type Router::Attribute
+                    'path' => RoutePath::Module,
+                    'file_name' => null, // should be null for route type Router::Attribute
                 ],
                 'prefix' => 'api',
                 'middleware' => 'api',
@@ -138,14 +138,14 @@ class RouteServiceProvider extends ServiceProvider
     {
         foreach (config('nebula.modules.paths') as $path) {
             $modulesPath = app_path($path);
-            if (!file_exists($modulesPath)) {
+            if (! file_exists($modulesPath)) {
                 return;
             }
-            $modules = array_filter(scandir($modulesPath), fn($module) => !in_array($module, ['.', '..']));
+            $modules = array_filter(scandir($modulesPath), fn ($module) => ! in_array($module, ['.', '..']));
 
             foreach ($modules as $module) {
                 $controllersPath = implode(DIRECTORY_SEPARATOR, [$modulesPath, $module, 'Http', 'Controllers']);
-                if (!file_exists($controllersPath)) {
+                if (! file_exists($controllersPath)) {
                     continue;
                 }
 
@@ -190,7 +190,7 @@ class RouteServiceProvider extends ServiceProvider
                     break;
                 case Prefix::class:
                     $subPrefix = $attribute->getArguments()['value'];
-                    $prefix = !empty($prefix) ? "$prefix/$subPrefix" : $subPrefix;
+                    $prefix = ! empty($prefix) ? "$prefix/$subPrefix" : $subPrefix;
                     break;
                 case Middleware::class:
                     [$routeMiddleware] = $attribute->getArguments();
@@ -201,7 +201,7 @@ class RouteServiceProvider extends ServiceProvider
             }
         }
 
-        if (!$route || !$method) {
+        if (! $route || ! $method) {
             return;
         }
 
@@ -218,14 +218,14 @@ class RouteServiceProvider extends ServiceProvider
     private function getFiles(string $path): array
     {
         $files = [];
-        $list = array_filter(scandir($path), fn($f) => !in_array($f, ['.', '..']));
+        $list = array_filter(scandir($path), fn ($f) => ! in_array($f, ['.', '..']));
 
         foreach ($list as $file) {
-            $filePath = $path . DIRECTORY_SEPARATOR . $file;
+            $filePath = $path.DIRECTORY_SEPARATOR.$file;
             if (is_dir($filePath)) {
                 $files = array_merge(
                     $files,
-                    array_map(fn($f) => $file . DIRECTORY_SEPARATOR . $f, $this->getFiles($filePath)),
+                    array_map(fn ($f) => $file.DIRECTORY_SEPARATOR.$f, $this->getFiles($filePath)),
                 );
             } else {
                 $files[] = $file;

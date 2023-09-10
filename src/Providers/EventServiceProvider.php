@@ -23,13 +23,14 @@ class EventServiceProvider extends ServiceProvider
 
     protected function moduleListener(): array
     {
-        return array_reduce(config('nebula.modules.paths'), function($listeners, $path) {
+        return array_reduce(config('nebula.modules.paths'), function ($listeners, $path) {
             $path = app_path($path);
-            if(!file_exists($path)) {
+            if (! file_exists($path)) {
                 return $listeners;
             }
 
             $modules = array_filter(scandir($path), fn ($module) => ! in_array($module, ['.', '..']));
+
             return [
                 ...$listeners,
                 ...array_reduce($modules, function ($listeners, $module) use ($path) {
@@ -39,7 +40,7 @@ class EventServiceProvider extends ServiceProvider
                     }
 
                     return $listeners;
-                }, [])
+                }, []),
             ];
         }, []);
     }

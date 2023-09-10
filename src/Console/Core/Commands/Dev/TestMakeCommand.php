@@ -14,10 +14,14 @@ class TestMakeCommand extends BaseTestMakeCommand
     protected function buildClass($name): array|string
     {
         $replace = [];
-
+        $guardGroup = strtolower($this->checkGuard() ?: '');
+        if ($guardGroup) {
+            $guardGroup = "@group $guardGroup";
+        }
         if ($module = strtolower($this->option('module'))) {
             $replace = [
                 '{{ moduleGroup }}' => "@group $module",
+                '{{ guardGroup }}' => $guardGroup,
             ];
         }
 

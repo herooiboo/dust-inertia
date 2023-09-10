@@ -10,6 +10,7 @@ class {{ class }} extends TestCase
 {
     /**
     * @test
+    * {{ guardGroup }}
     * {{ moduleGroup }}
     */
     public function example(): void
