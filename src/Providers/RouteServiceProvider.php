@@ -111,14 +111,14 @@ class RouteServiceProvider extends ServiceProvider
                 'middleware' => 'api',
                 'rate_limit_max' => 60,
             ],
-            'test' => [
+            'playground' => [
                 'routes' => [
                     'type' => RouterEnum::File,
                     'path' => RoutePath::Root, // should not be none for route type Router::File
-                    'file_name' => 'test', // should not be null for route type Router::File
+                    'file_name' => 'playground', // should not be null for route type Router::File
                 ],
-                'prefix' => 'test',
-                'middleware' => 'test',
+                'prefix' => 'playground',
+                'middleware' => 'playground',
                 'rate_limit_max' => 0,
             ],
         ];
