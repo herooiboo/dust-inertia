@@ -5,10 +5,11 @@ namespace {{ namespace }};
 use Dust\Base\Controller;
 use Dust\Base\Contracts\ResponseInterface;
 use Illuminate\Http\Request;
-use \Dust\Http\Router\Attributes\Guard;
-use \Dust\Http\Router\Attributes\Middleware;
-use \Dust\Http\Router\Attributes\Prefix;
-use \Dust\Http\Router\Attributes\Route;
+use Dust\Http\Router\Attributes\Guard;
+use Dust\Http\Router\Attributes\Middleware;
+use Dust\Http\Router\Attributes\Prefix;
+use Dust\Http\Router\Attributes\Route;
+use Dust\Http\Router\Enum\Http;
 
 //#[Prefix('dust')]
 //#[Middleware(['auth:api'])]

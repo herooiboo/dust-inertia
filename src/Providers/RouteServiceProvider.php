@@ -98,39 +98,6 @@ class RouteServiceProvider extends ServiceProvider
         }
     }
 
-    protected function guards(): array
-    {
-        $default = [
-            'api' => [
-                'routes' => [
-                    'type' => RouterEnum::Attribute, // should be none for route type Router::Attribute
-                    'path' => RoutePath::Module,
-                    'file_name' => null, // should be null for route type Router::Attribute
-                ],
-                'prefix' => 'api',
-                'middleware' => 'api',
-                'rate_limit_max' => 60,
-            ],
-            'playground' => [
-                'routes' => [
-                    'type' => RouterEnum::File,
-                    'path' => RoutePath::Root, // should not be none for route type Router::File
-                    'file_name' => 'playground', // should not be null for route type Router::File
-                ],
-                'prefix' => 'playground',
-                'middleware' => 'playground',
-                'rate_limit_max' => 0,
-            ],
-        ];
-
-        return array_merge($default, $this->extendGuards());
-    }
-
-    protected function extendGuards(): array
-    {
-        return [];
-    }
-
     /**
      * @throws ReflectionException
      */
@@ -189,7 +156,7 @@ class RouteServiceProvider extends ServiceProvider
                     }
                     break;
                 case Prefix::class:
-                    $subPrefix = $attribute->getArguments()['value'];
+                    [$subPrefix] = $attribute->getArguments();
                     $prefix = ! empty($prefix) ? "$prefix/$subPrefix" : $subPrefix;
                     break;
                 case Middleware::class:
@@ -233,5 +200,38 @@ class RouteServiceProvider extends ServiceProvider
         }
 
         return $files;
+    }
+
+    protected function guards(): array
+    {
+        $default = [
+            'api' => [
+                'routes' => [
+                    'type' => RouterEnum::Attribute,
+                    'path' => RoutePath::None, // should be none for route type Router::Attribute
+                    'file_name' => null, // should be null for route type Router::Attribute
+                ],
+                'prefix' => 'api',
+                'middleware' => 'api',
+                'rate_limit_max' => 60,
+            ],
+            'playground' => [
+                'routes' => [
+                    'type' => RouterEnum::File,
+                    'path' => RoutePath::Root, // should not be none for route type Router::File
+                    'file_name' => 'playground', // should not be null for route type Router::File
+                ],
+                'prefix' => 'playground',
+                'middleware' => 'playground',
+                'rate_limit_max' => 0,
+            ],
+        ];
+
+        return array_merge($default, $this->extendGuards());
+    }
+
+    protected function extendGuards(): array
+    {
+        return [];
     }
 }
