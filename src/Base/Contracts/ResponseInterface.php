@@ -12,7 +12,7 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 interface ResponseInterface
 {
-    public function send(RequestHandlerInterface $handler, Request $request): JsonResponse|JsonResource|LengthAwarePaginator|StreamedResponse|RedirectResponse;
+    public function send(RequestHandlerInterface $handler, Request $request): mixed;
 
     public function silent(): static;
 

@@ -21,7 +21,7 @@ abstract class Controller implements RequestHandlerInterface
     {
     }
 
-    public function __invoke(): LengthAwarePaginator|JsonResponse|JsonResource|StreamedResponse|RedirectResponse
+    public function __invoke(): mixed
     {
         if ($this->bindings) {
             $this->resolveBindings();

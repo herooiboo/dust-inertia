@@ -35,7 +35,7 @@ abstract class Response implements ResponseInterface
 
     private bool $silence = false;
 
-    public function send(RequestHandlerInterface $handler, Request $request): JsonResponse|JsonResource|LengthAwarePaginator|StreamedResponse|RedirectResponse
+    public function send(RequestHandlerInterface $handler, Request $request): mixed
     {
         try {
             $data = call_user_func([$handler, 'handle'], $this, $request);
