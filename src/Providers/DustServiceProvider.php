@@ -12,9 +12,7 @@ class DustServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->mergeConfigFrom(
-            __DIR__.'/../../config/nebula.php', 'nebula'
-        );
+        //
     }
 
     /**
@@ -28,7 +26,7 @@ class DustServiceProvider extends ServiceProvider
             ]);
         }
         $this->publishes([
-            __DIR__.'/../../config/nebula.php' => config_path('nebula.php'),
+            __DIR__.'/../../config/dust.php' => config_path('dust.php'),
         ]);
     }
 }

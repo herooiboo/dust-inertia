@@ -3,7 +3,7 @@
 if (! function_exists('modules_path')) {
     function modules_path(): string
     {
-        return app_path(config('nebula.modules.defaults.path'));
+        return app_path(config('dust.modules.defaults.path'));
     }
 }
 

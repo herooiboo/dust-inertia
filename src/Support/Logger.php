@@ -56,7 +56,7 @@ class Logger
 
     protected static function resolveChannel(string|null $channel, $level): string
     {
-        $channel = $channel ?: config("nebula.logging.channels.$level");
+        $channel = $channel ?: config("dust.logging.channels.$level");
 
         return $channel && self::validChannel($channel) ? $channel : config('logging.default');
     }

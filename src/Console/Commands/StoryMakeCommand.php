@@ -2,6 +2,7 @@
 
 namespace Dust\Console\Commands;
 
+use Dust\Http\Router\Enum\Router;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Dust\Console\Core\Concerns\AbsolutePathChecker;
@@ -62,6 +63,9 @@ class StoryMakeCommand extends Command
     protected function checkRoutes($module, string|null $guard): void
     {
         $guard = strtolower($guard ?: 'api');
+        if (config("dust.guards.$guard.routes.type") === Router::Attribute) {
+            return;
+        }
         $routesFilePath = get_module_path($module, ['Http', 'Routes', "$guard.php"]);
 
         if (file_exists($routesFilePath)) {

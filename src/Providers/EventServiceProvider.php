@@ -23,7 +23,7 @@ class EventServiceProvider extends ServiceProvider
 
     protected function moduleListener(): array
     {
-        return array_reduce(config('nebula.modules.paths'), function ($listeners, $path) {
+        return array_reduce(config('dust.modules.paths'), function ($listeners, $path) {
             $path = app_path($path);
             if (! file_exists($path)) {
                 return $listeners;

@@ -23,10 +23,11 @@ class RouteServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        $this->configureRateLimiting();
+        $guards = config('dust.guards');
+        $this->configureRateLimiting($guards);
 
-        $this->routes(function () {
-            foreach ($this->guards() as $config) {
+        $this->routes(function () use ($guards) {
+            foreach ($guards as $config) {
                 if ($config['routes']['type'] === RouterEnum::File) {
                     if ($config['routes']['path'] === RoutePath::Module) {
                         $this->registerModuleRoutes($config['prefix'], $config['middleware'], $config['routes']['file_name']);
@@ -40,9 +41,9 @@ class RouteServiceProvider extends ServiceProvider
         });
     }
 
-    protected function configureRateLimiting(): void
+    protected function configureRateLimiting(array $guards): void
     {
-        foreach ($this->guards() as $guard => $config) {
+        foreach ($guards as $guard => $config) {
             if ($config['rate_limit_max']) {
                 RateLimiter::for($guard, function (Request $request) use ($config) {
                     return Limit::perMinute($config['rate_limit_max'])->by($request->user()?->id ?: $request->ip());
@@ -83,7 +84,7 @@ class RouteServiceProvider extends ServiceProvider
 
         $registrar = Route::prefix($prefix)->middleware($middleware);
 
-        foreach (config('nebula.modules.paths') as $path) {
+        foreach (config('dust.modules.paths') as $path) {
             $modulesPath = app_path($path);
             if (! file_exists($modulesPath)) {
                 return;
@@ -103,7 +104,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function registerAttributeRoutes(array $config): void
     {
-        foreach (config('nebula.modules.paths') as $path) {
+        foreach (config('dust.modules.paths') as $path) {
             $modulesPath = app_path($path);
             if (! file_exists($modulesPath)) {
                 return;
@@ -200,38 +201,5 @@ class RouteServiceProvider extends ServiceProvider
         }
 
         return $files;
-    }
-
-    protected function guards(): array
-    {
-        $default = [
-            'api' => [
-                'routes' => [
-                    'type' => RouterEnum::Attribute,
-                    'path' => RoutePath::None, // should be none for route type Router::Attribute
-                    'file_name' => null, // should be null for route type Router::Attribute
-                ],
-                'prefix' => 'api',
-                'middleware' => 'api',
-                'rate_limit_max' => 60,
-            ],
-            'playground' => [
-                'routes' => [
-                    'type' => RouterEnum::File,
-                    'path' => RoutePath::Root, // should not be none for route type Router::File
-                    'file_name' => 'playground', // should not be null for route type Router::File
-                ],
-                'prefix' => 'playground',
-                'middleware' => 'playground',
-                'rate_limit_max' => 0,
-            ],
-        ];
-
-        return array_merge($default, $this->extendGuards());
-    }
-
-    protected function extendGuards(): array
-    {
-        return [];
     }
 }
