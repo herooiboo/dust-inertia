@@ -175,7 +175,7 @@ abstract class Response implements ResponseInterface
         //
     }
 
-    protected function handleErrorResponse(Throwable $e): bool|JsonResponse
+    protected function handleErrorResponse(Throwable $e): false|JsonResponse
     {
         return false;
     }
