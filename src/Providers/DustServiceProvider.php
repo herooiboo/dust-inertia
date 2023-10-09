@@ -29,6 +29,6 @@ class DustServiceProvider extends ServiceProvider
         }
         $this->publishes([
             __DIR__.'/../../config/dust.php' => config_path('dust.php'),
-        ]);
+        ], 'dust-config');
     }
 }
