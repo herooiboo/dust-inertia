@@ -7,21 +7,40 @@ use Throwable;
 use Dust\Support\Logger;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 use Dust\Http\Responses\ErrorResponse;
 use Dust\Base\Contracts\ResponseInterface;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Session\TokenMismatchException;
+use Illuminate\Validation\ValidationException;
 use Dust\Base\Contracts\RequestHandlerInterface;
-use Illuminate\Http\Resources\Json\JsonResource;
-use Symfony\Component\HttpFoundation\StreamedResponse;
+use Illuminate\Database\RecordsNotFoundException;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Database\MultipleRecordsFoundException;
 use Dust\Base\Contracts\RestrictEventInjectionInterface;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Dust\Exceptions\Response\EventInjectionRestrictedException;
-use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
+use Illuminate\Routing\Exceptions\BackedEnumCaseNotFoundException;
+use Symfony\Component\HttpFoundation\Exception\SuspiciousOperationException;
 
 abstract class Response implements ResponseInterface
 {
-    private Closure|null $onLogObserver = null;
+    protected const LARAVEL_HANDLED_EXCEPTIONS = [
+        AuthenticationException::class,
+        AuthorizationException::class,
+        BackedEnumCaseNotFoundException::class,
+        HttpException::class,
+        HttpResponseException::class,
+        ModelNotFoundException::class,
+        MultipleRecordsFoundException::class,
+        RecordsNotFoundException::class,
+        SuspiciousOperationException::class,
+        TokenMismatchException::class,
+        ValidationException::class,
+    ];
+
+    private ?Closure $onLogObserver = null;
 
     /**
      * @var callable[]
@@ -35,6 +54,9 @@ abstract class Response implements ResponseInterface
 
     private bool $silence = false;
 
+    /**
+     * @throws Throwable
+     */
     public function send(RequestHandlerInterface $handler, Request $request): mixed
     {
         try {
@@ -42,15 +64,15 @@ abstract class Response implements ResponseInterface
             $this->fireSuccessChain($data);
 
             return $this->createResource($data);
-        } catch (UnauthorizedHttpException|AuthenticationException $e) {
-            $this->fireFailureChain($request, $e);
-
-            return $this->error($e);
         } catch (Throwable $e) {
-            $this->logError($handler, $request, $e);
+            $handled = $this->isLaravelHandledException($e);
+            if (! $handled) {
+                $this->logError($handler, $request, $e);
+            }
+
             $this->fireFailureChain($request, $e);
 
-            return $this->error($e);
+            return $this->error($e, $handled);
         }
     }
 
@@ -139,7 +161,7 @@ abstract class Response implements ResponseInterface
         $this->success($resource);
     }
 
-    final protected function fireFailureChain(Request $request, Throwable $e = null): void
+    final protected function fireFailureChain(Request $request, ?Throwable $e = null): void
     {
         if ($this->silence) {
             return;
@@ -155,14 +177,45 @@ abstract class Response implements ResponseInterface
     final protected function buildLogBody(Request $request, Throwable $e): array
     {
         return array_merge(
-            ($onLog = $this->onLogObserver) ? $onLog($request, $e) : [],
+            ($onLog = $this->onLogObserver) ? $onLog($request, $e) : $this->errorMeta(),
             ['user' => $request->user()->id ?? null]
         );
     }
 
-    final protected function error(Throwable $e): JsonResponse
+    /**
+     * @throws Throwable
+     */
+    final protected function error(Throwable $e, bool $handled = false): JsonResponse
     {
-        return $this->handleErrorResponse($e) ?: new ErrorResponse('Error!! try again later.', [], status: 500);
+        return $this->handleErrorResponse($e) ?: $this->defaultErrorResponse($e, $handled);
+    }
+
+    /**
+     * @throws Throwable
+     */
+    final protected function defaultErrorResponse(Throwable $e, bool $handled): JsonResponse|ErrorResponse
+    {
+        if ($handled) {
+            throw $e;
+        }
+
+        return new ErrorResponse('Error!! try again later.', $this->errorMeta(), status: 500);
+    }
+
+    public function isLaravelHandledException(Throwable $e): bool
+    {
+        foreach (self::LARAVEL_HANDLED_EXCEPTIONS as $ex) {
+            if ($e instanceof $ex) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function errorMeta(): array
+    {
+        return [];
     }
 
     protected function success(mixed $resource): void
@@ -170,7 +223,7 @@ abstract class Response implements ResponseInterface
         //
     }
 
-    protected function failure(Request $request, Throwable|null $e): void
+    protected function failure(Request $request, ?Throwable $e): void
     {
         //
     }

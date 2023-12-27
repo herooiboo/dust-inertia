@@ -1,7 +1,7 @@
 <?php
 
-use Dust\Http\Router\Enum\RoutePath;
 use Dust\Http\Router\Enum\Router;
+use Dust\Http\Router\Enum\RoutePath;
 
 return [
     'modules' => [
@@ -36,12 +36,12 @@ return [
     ],
     'logging' => [
         'channels' => [
-            'info'      => 'daily',
-            'debug'     => 'daily',
-            'warning'   => 'daily',
-            'error'     => 'daily',
+            'info' => 'daily',
+            'debug' => 'daily',
+            'warning' => 'daily',
+            'error' => 'daily',
             'emergency' => 'daily',
-            'critical'  => 'daily',
-        ]
-    ]
+            'critical' => 'daily',
+        ],
+    ],
 ];

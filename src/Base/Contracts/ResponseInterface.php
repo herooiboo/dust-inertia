@@ -4,11 +4,6 @@ namespace Dust\Base\Contracts;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Resources\Json\JsonResource;
-use Symfony\Component\HttpFoundation\StreamedResponse;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 interface ResponseInterface
 {

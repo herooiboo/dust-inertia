@@ -9,7 +9,7 @@ use Illuminate\Database\Console\Factories\FactoryMakeCommand as BaseFactoryMakeC
 
 class FactoryMakeCommand extends BaseFactoryMakeCommand
 {
-    use OptionsExtender, ModelQualifier;
+    use ModelQualifier, OptionsExtender;
 
     protected function getDefaultNamespace($rootNamespace): string
     {

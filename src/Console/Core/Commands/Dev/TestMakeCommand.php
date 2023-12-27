@@ -9,7 +9,7 @@ use Illuminate\Foundation\Console\TestMakeCommand as BaseTestMakeCommand;
 
 class TestMakeCommand extends BaseTestMakeCommand
 {
-    use OptionsExtender, GuardChecker;
+    use GuardChecker, OptionsExtender;
 
     protected function buildClass($name): array|string
     {

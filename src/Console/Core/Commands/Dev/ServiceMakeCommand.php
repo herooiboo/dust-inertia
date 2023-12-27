@@ -11,7 +11,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
 #[AsCommand(name: 'make:service')]
 class ServiceMakeCommand extends GeneratorCommand
 {
-    use OptionsExtender, GuardChecker;
+    use GuardChecker, OptionsExtender;
 
     protected $name = 'make:service';
 

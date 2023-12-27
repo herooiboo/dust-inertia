@@ -12,7 +12,7 @@ use Dust\Console\Core\Concerns\AbsolutePathChecker;
 #[AsCommand(name: 'make:repository')]
 class RepositoryMakeCommand extends GeneratorCommand
 {
-    use ModelQualifier, AbsolutePathChecker;
+    use AbsolutePathChecker, ModelQualifier;
 
     protected $name = 'make:repository';
 

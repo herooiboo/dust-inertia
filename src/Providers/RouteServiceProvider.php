@@ -52,7 +52,7 @@ class RouteServiceProvider extends ServiceProvider
         }
     }
 
-    protected function registerRootRoutes(string $prefix, string $middleware = null, string $routesFileName = null): void
+    protected function registerRootRoutes(string $prefix, ?string $middleware = null, ?string $routesFileName = null): void
     {
         if (! $middleware) {
             $middleware = $prefix;
@@ -72,7 +72,7 @@ class RouteServiceProvider extends ServiceProvider
             ->group($path);
     }
 
-    protected function registerModuleRoutes(string $prefix, string $middleware = null, string $routesFileName = null): void
+    protected function registerModuleRoutes(string $prefix, ?string $middleware = null, ?string $routesFileName = null): void
     {
         if (! $middleware) {
             $middleware = $prefix;

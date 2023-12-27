@@ -8,7 +8,7 @@ use Illuminate\Foundation\Console\ResourceMakeCommand as BaseResourceMakeCommand
 
 class ResourceMakeCommand extends BaseResourceMakeCommand
 {
-    use OptionsExtender, GuardChecker;
+    use GuardChecker, OptionsExtender;
 
     protected function getDefaultNamespace($rootNamespace): string
     {

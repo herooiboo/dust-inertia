@@ -4,14 +4,9 @@ namespace Dust\Base;
 
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 use Dust\Base\Contracts\ResponseInterface;
 use Dust\Base\Contracts\RequestHandlerInterface;
-use Illuminate\Http\Resources\Json\JsonResource;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 abstract class Controller implements RequestHandlerInterface
 {

@@ -15,7 +15,7 @@ abstract class Repository
     {
     }
 
-    public function update(int|string $id, array $payload): Eloquent|null
+    public function update(int|string $id, array $payload): ?Eloquent
     {
         $model = $this->model
             ->query()

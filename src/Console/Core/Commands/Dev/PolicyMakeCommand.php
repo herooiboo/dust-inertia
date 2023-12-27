@@ -9,7 +9,7 @@ use Illuminate\Foundation\Console\PolicyMakeCommand as BasePolicyMakeCommand;
 
 class PolicyMakeCommand extends BasePolicyMakeCommand
 {
-    use OptionsExtender, ModelQualifier;
+    use ModelQualifier, OptionsExtender;
 
     protected function getDefaultNamespace($rootNamespace): string
     {

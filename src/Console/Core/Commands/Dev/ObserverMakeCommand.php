@@ -8,7 +8,7 @@ use Illuminate\Foundation\Console\ObserverMakeCommand as BaseObserverMakeCommand
 
 class ObserverMakeCommand extends BaseObserverMakeCommand
 {
-    use OptionsExtender, ModelQualifier;
+    use ModelQualifier, OptionsExtender;
 
     protected function getDefaultNamespace($rootNamespace): string
     {

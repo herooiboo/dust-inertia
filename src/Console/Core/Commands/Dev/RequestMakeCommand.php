@@ -9,7 +9,7 @@ use Illuminate\Foundation\Console\RequestMakeCommand as BaseRequestMakeCommand;
 
 class RequestMakeCommand extends BaseRequestMakeCommand
 {
-    use OptionsExtender, GuardChecker;
+    use GuardChecker, OptionsExtender;
 
     protected function getPath($name): string
     {

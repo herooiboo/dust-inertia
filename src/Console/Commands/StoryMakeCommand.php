@@ -2,8 +2,8 @@
 
 namespace Dust\Console\Commands;
 
-use Dust\Http\Router\Enum\Router;
 use Illuminate\Console\Command;
+use Dust\Http\Router\Enum\Router;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Dust\Console\Core\Concerns\AbsolutePathChecker;
 
@@ -32,7 +32,7 @@ class StoryMakeCommand extends Command
         $this->checkRoutes($module, $guard);
     }
 
-    protected function createController(string $name, string $module, string|null $guard): void
+    protected function createController(string $name, string $module, ?string $guard): void
     {
         $arguments = [
             'name' => $name,
@@ -47,7 +47,7 @@ class StoryMakeCommand extends Command
         $this->call('make:controller', $arguments);
     }
 
-    protected function createTest(string $name, string $module, string|null $guard): void
+    protected function createTest(string $name, string $module, ?string $guard): void
     {
         $arguments = [
             'name' => $name,
@@ -60,7 +60,7 @@ class StoryMakeCommand extends Command
         $this->call('make:test', $arguments);
     }
 
-    protected function checkRoutes($module, string|null $guard): void
+    protected function checkRoutes($module, ?string $guard): void
     {
         $guard = strtolower($guard ?: 'api');
         if (config("dust.guards.$guard.routes.type") === Router::Attribute) {

@@ -9,7 +9,7 @@ trait GuardChecker
     /**
      * @throws UnknownGuardException
      */
-    protected function checkGuard(): string|null
+    protected function checkGuard(): ?string
     {
         $guard = $this->option('guard');
 
