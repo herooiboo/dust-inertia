@@ -6,8 +6,6 @@ use UnitEnum;
 
 /**
  * @implements UnitEnum
- *
- * @property string $name
  */
 trait IsStringable
 {

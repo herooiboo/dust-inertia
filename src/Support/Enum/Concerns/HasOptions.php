@@ -7,8 +7,6 @@ use Dust\Support\Enum\Contracts\StringableInterface;
 
 /**
  * @implements UnitEnum
- *
- * @method static array cases
  */
 trait HasOptions
 {
