@@ -8,6 +8,7 @@ use Dust\Support\Logger;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Dust\Http\Responses\ErrorResponse;
+use Illuminate\Foundation\Application;
 use Dust\Base\Contracts\ResponseInterface;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Session\TokenMismatchException;
@@ -54,12 +55,17 @@ abstract class Response implements ResponseInterface
 
     private bool $silence = false;
 
+    public function __construct(protected Application $app)
+    {
+    }
+
     /**
      * @throws Throwable
      */
     public function send(RequestHandlerInterface $handler, Request $request): mixed
     {
         try {
+            $this->request = $request;
             $data = call_user_func([$handler, 'handle'], $this, $request);
             $this->fireSuccessChain($data);
 
@@ -199,7 +205,7 @@ abstract class Response implements ResponseInterface
             throw $e;
         }
 
-        return new ErrorResponse('Error!! try again later.', $this->errorMeta(), status: 500);
+        return new ErrorResponse('Error!! try again later.', $this->errorMeta($e), status: 500);
     }
 
     public function isLaravelHandledException(Throwable $e): bool
@@ -213,9 +219,17 @@ abstract class Response implements ResponseInterface
         return false;
     }
 
-    public function errorMeta(): array
+    public function errorMeta(Throwable $e): array
     {
-        return [];
+        if (!$this->app->config['app']['debug']) {
+            return [];
+        }
+
+        return [
+            'message' => $e->getMessage(),
+            'file' => $e->getFile(),
+            'line' => $e->getLine(),
+        ];
     }
 
     protected function success(mixed $resource): void
