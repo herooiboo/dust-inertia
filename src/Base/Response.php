@@ -208,7 +208,7 @@ abstract class Response implements ResponseInterface
         return new ErrorResponse('Error!! try again later.', $this->errorMeta($e), status: 500);
     }
 
-    public function isLaravelHandledException(Throwable $e): bool
+    final protected function isLaravelHandledException(Throwable $e): bool
     {
         foreach (self::LARAVEL_HANDLED_EXCEPTIONS as $ex) {
             if ($e instanceof $ex) {
@@ -219,16 +219,18 @@ abstract class Response implements ResponseInterface
         return false;
     }
 
-    public function errorMeta(Throwable $e): array
+    protected function errorMeta(Throwable $e): array
     {
-        if (!$this->app->config['app']['debug']) {
+        if (! $this->app->config['app']['debug']) {
             return [];
         }
 
         return [
-            'message' => $e->getMessage(),
-            'file' => $e->getFile(),
-            'line' => $e->getLine(),
+            'exception' => [
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+            ],
         ];
     }
 
