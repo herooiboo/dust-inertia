@@ -232,6 +232,8 @@ abstract class Response implements ResponseInterface
 
         return [
             'exception' => [
+                'class' => get_class($e),
+                'code' => $e->getCode(),
                 'message' => $e->getMessage(),
                 'file' => $e->getFile(),
                 'line' => $e->getLine(),
