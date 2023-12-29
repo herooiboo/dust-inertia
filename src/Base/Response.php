@@ -128,11 +128,11 @@ abstract class Response implements ResponseInterface
         Logger::error(
             sprintf('%s_ERROR',
                 $this->getSnakedName(
-                    $this->getClassName($handler)
-                )
+                    $this->getClassName($handler),
+                ),
             ),
             $e,
-            $this->buildLogBody($request, $e)
+            $this->buildLogBody($request, $e),
         );
     }
 
@@ -141,9 +141,9 @@ abstract class Response implements ResponseInterface
         return strtoupper(
             implode('_',
                 array_filter(
-                    preg_split('/(?=[A-Z])/', $name)
-                )
-            )
+                    preg_split('/(?=[A-Z])/', $name),
+                ),
+            ),
         );
     }
 
@@ -183,8 +183,8 @@ abstract class Response implements ResponseInterface
     final protected function buildLogBody(Request $request, Throwable $e): array
     {
         return array_merge(
-            ($onLog = $this->onLogObserver) ? $onLog($request, $e) : $this->errorMeta($e),
-            ['user' => $request->user()->id ?? null]
+            ($onLog = $this->onLogObserver) ? $onLog($request, $e) : $this->errorMeta($e, self::isDebug()),
+            ['user' => $request->user()->id ?? null],
         );
     }
 
@@ -204,8 +204,8 @@ abstract class Response implements ResponseInterface
         if ($handled) {
             throw $e;
         }
-
-        return new ErrorResponse('Error!! try again later.', $this->errorMeta($e), status: 500);
+        $debugMode = self::isDebug();
+        return new ErrorResponse($debugMode ? $e->getMessage() : 'Error!! try again later.', $this->errorMeta($e, $debugMode), status: 500);
     }
 
     final protected function isLaravelHandledException(Throwable $e): bool
@@ -219,9 +219,14 @@ abstract class Response implements ResponseInterface
         return false;
     }
 
-    protected function errorMeta(Throwable $e): array
+    final protected function isDebug(): bool
     {
-        if (! $this->app->config['app']['debug']) {
+        return (bool) $this->app->config['app']['debug'];
+    }
+
+    protected function errorMeta(Throwable $e, bool $debugMode): array
+    {
+        if (! $debugMode) {
             return [];
         }
 
