@@ -183,7 +183,7 @@ abstract class Response implements ResponseInterface
     final protected function buildLogBody(Request $request, Throwable $e): array
     {
         return array_merge(
-            ($onLog = $this->onLogObserver) ? $onLog($request, $e) : $this->errorMeta(),
+            ($onLog = $this->onLogObserver) ? $onLog($request, $e) : $this->errorMeta($e),
             ['user' => $request->user()->id ?? null]
         );
     }
