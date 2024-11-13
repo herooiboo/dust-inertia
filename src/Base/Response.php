@@ -66,14 +66,13 @@ abstract class Response implements ResponseInterface
     public function send(RequestHandlerInterface $handler, Request $request): mixed
     {
         try {
-            $this->request = $request;
             $data = call_user_func([$handler, 'handle'], $this, $request);
             $this->fireSuccessChain($data);
 
             return $this->createResource($data);
         } catch (Throwable $e) {
             $handled = $this->isLaravelHandledException($e);
-            if (! $handled) {
+            if (!$handled) {
                 $this->logError($handler, $request, $e);
             }
 
@@ -200,18 +199,30 @@ abstract class Response implements ResponseInterface
     /**
      * @throws Throwable
      */
-    final protected function defaultErrorResponse(Request $request, Throwable $e, bool $handled): JsonResponse|ErrorResponse|View
-    {
+    final protected function defaultErrorResponse(
+        Request $request,
+        Throwable $e,
+        bool $handled,
+    ): JsonResponse|ErrorResponse|View {
         if ($handled) {
             throw $e;
         }
 
-        if( !$request->expectsJson() && view()->exists(config('dust.default_error_view')) ) {
-            return view(config('dust.default_error_view'), ['exception' => $e]);
+        if (
+            !$request->expectsJson()
+        ) {
+            $errorView = $this->app['config']->get('dust.default_error_view');
+
+            $view = $this->app['view'];
+            if ($view->exists($errorView)) {
+                return $view->make($errorView, ['exception' => $e]);
+            }
         }
 
         $debugMode = self::isDebug();
-        return new ErrorResponse($debugMode ? $e->getMessage() : 'Error!! try again later.', $this->errorMeta($e, $debugMode), status: 500);
+
+        return new ErrorResponse($debugMode ? $e->getMessage() : 'Error!! try again later.',
+            $this->errorMeta($e, $debugMode), status: 500);
     }
 
     final protected function isLaravelHandledException(Throwable $e): bool
@@ -232,7 +243,7 @@ abstract class Response implements ResponseInterface
 
     protected function errorMeta(Throwable $e, bool $debugMode): array
     {
-        if (! $debugMode) {
+        if (!$debugMode) {
             return [];
         }
 
