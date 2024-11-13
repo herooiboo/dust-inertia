@@ -14,7 +14,9 @@ trait HasOptions
     public static function options(): array
     {
         return array_reduce(self::cases(), function ($options, StringableInterface|UnitEnum $case) {
-            $options[] = ['text' => $case->toString(), 'value' => static::getValue($case)];
+            $options[] = ['text'  => $case instanceof StringableInterface ? $case->toString() : $case->name,
+                          'value' => static::getValue($case)
+            ];
 
             return $options;
         }, []);
