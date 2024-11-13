@@ -44,4 +44,5 @@ return [
             'critical' => 'daily',
         ],
     ],
+    'default_error_view' => 'error',
 ];

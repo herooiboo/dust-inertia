@@ -7,6 +7,7 @@ use Throwable;
 use Dust\Support\Logger;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Contracts\View\View;
 use Dust\Http\Responses\ErrorResponse;
 use Illuminate\Foundation\Application;
 use Dust\Base\Contracts\ResponseInterface;
@@ -78,7 +79,7 @@ abstract class Response implements ResponseInterface
 
             $this->fireFailureChain($request, $e);
 
-            return $this->error($e, $handled);
+            return $this->error($request, $e, $handled);
         }
     }
 
@@ -191,19 +192,24 @@ abstract class Response implements ResponseInterface
     /**
      * @throws Throwable
      */
-    final protected function error(Throwable $e, bool $handled = false): JsonResponse
+    final protected function error(Request $request, Throwable $e, bool $handled = false): JsonResponse|View
     {
-        return $this->handleErrorResponse($e) ?: $this->defaultErrorResponse($e, $handled);
+        return $this->handleErrorResponse($e) ?: $this->defaultErrorResponse($request, $e, $handled);
     }
 
     /**
      * @throws Throwable
      */
-    final protected function defaultErrorResponse(Throwable $e, bool $handled): JsonResponse|ErrorResponse
+    final protected function defaultErrorResponse(Request $request, Throwable $e, bool $handled): JsonResponse|ErrorResponse|View
     {
         if ($handled) {
             throw $e;
         }
+
+        if( !$request->expectsJson() && view()->exists(config('dust.default_error_view')) ) {
+            return view(config('dust.default_error_view'), ['exception' => $e]);
+        }
+
         $debugMode = self::isDebug();
         return new ErrorResponse($debugMode ? $e->getMessage() : 'Error!! try again later.', $this->errorMeta($e, $debugMode), status: 500);
     }
@@ -251,7 +257,7 @@ abstract class Response implements ResponseInterface
         //
     }
 
-    protected function handleErrorResponse(Throwable $e): false|JsonResponse
+    protected function handleErrorResponse(Throwable $e): false|JsonResponse|View
     {
         return false;
     }
