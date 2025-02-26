@@ -16,7 +16,7 @@ if (! function_exists('app_modules')) {
             return [];
         }
 
-        return array_filter(scandir(modules_path()), fn ($module) => ! in_array($module, ['.', '..']));
+        return array_filter(scandir($modulesPath), fn ($module) => ! in_array($module, ['.', '..']));
     }
 }
 
