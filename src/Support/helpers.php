@@ -10,7 +10,13 @@ if (! function_exists('modules_path')) {
 if (! function_exists('app_modules')) {
     function app_modules(): array
     {
-        return array_filter(scandir(modules_path()), fn ($module) => ! in_array($module, ['.', '..']));
+        $modulesPath = modules_path();
+
+        if (!is_dir($modulesPath)) {
+            return [];
+        }
+
+        return array_filter(scandir($modulesPath), fn ($module) => ! in_array($module, ['.', '..']));
     }
 }
 
