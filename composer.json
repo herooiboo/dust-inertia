@@ -1,6 +1,6 @@
 {
     "name": "herooiboo/dust-inertia",
-    "version": "v10.0.0",
+    "version": "v10.0.1",
     "description": "The Nebula project dust, Inertia Edition.",
     "type": "library",
     "require": {
