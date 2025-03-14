@@ -1,7 +1,7 @@
 {
-    "name": "cyberbugz/dust",
-    "version": "v5.1.9",
-    "description": "The Nebula project dust.",
+    "name": "herooiboo/dust-inertia",
+    "version": "v1.0.0",
+    "description": "The Nebula project dust, Inertia Edition.",
     "type": "library",
     "require": {
         "php": "^8.1"
@@ -23,6 +23,11 @@
             "name": "Manson",
             "email": "mansonx13@gmail.com",
             "role": "Archetict"
+        },
+        {
+            "name": "Ebrahem",
+            "email": "i.mohamed.dev@gmail.com",
+            "role": "Developer"
         }
     ],
     "extra": {
